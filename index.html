@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual - Con Carga de Archivos</title>
+    <title>Asistente Virtual Personalizado - IA Segura</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <style>
         * {
@@ -21,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             height: 100vh;
@@ -33,10 +32,11 @@
             background: white;
             border-radius: 15px;
             padding: 25px;
-            width: 400px;
+            width: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             overflow-y: auto;
+            max-height: 95vh;
         }
 
         .chat-panel {
@@ -66,6 +66,115 @@
             text-align: center;
         }
 
+        /* Configuración Segura de API */
+        .secure-config {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .secure-config h4 {
+            color: #00b894;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .key-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #2d3436;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .key-input:focus {
+            outline: none;
+            border-color: #00b894;
+            box-shadow: 0 0 10px rgba(0, 184, 148, 0.3);
+        }
+
+        .key-input::placeholder {
+            color: #999;
+        }
+
+        .config-btn {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .config-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,184,148,0.3);
+        }
+
+        .config-btn.reset {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator.connected {
+            background: rgba(0, 184, 148, 0.2);
+            color: #00b894;
+            border: 1px solid rgba(0, 184, 148, 0.3);
+        }
+
+        .status-indicator.disconnected {
+            background: rgba(214, 48, 49, 0.2);
+            color: #d63031;
+            border: 1px solid rgba(214, 48, 49, 0.3);
+        }
+
+        .security-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00b894;
+            margin-top: 15px;
+        }
+
+        .security-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .security-info li {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        /* Carga de Archivos */
         .upload-section {
             margin-bottom: 25px;
             padding: 20px;
@@ -125,6 +234,7 @@
             display: block;
         }
 
+        /* Base de Conocimiento */
         .knowledge-base {
             margin-bottom: 20px;
         }
@@ -149,31 +259,40 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
         }
 
         .knowledge-item p {
             color: #636e72;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.4;
         }
 
         .file-icon {
-            font-size: 16px;
+            font-size: 14px;
         }
 
+        /* Formulario Manual */
         .add-knowledge {
             margin-bottom: 20px;
         }
 
+        .add-knowledge h4 {
+            margin-bottom: 10px;
+            color: #2d3436;
+            font-size: 15px;
+        }
+
         .add-knowledge textarea {
             width: 100%;
-            height: 100px;
+            height: 80px;
             border: 2px solid #ddd;
             border-radius: 8px;
             padding: 12px;
             resize: vertical;
             font-family: inherit;
             transition: border-color 0.3s ease;
+            font-size: 14px;
         }
 
         .add-knowledge textarea:focus {
@@ -188,6 +307,7 @@
             border: 2px solid #ddd;
             border-radius: 8px;
             transition: border-color 0.3s ease;
+            font-size: 14px;
         }
 
         .add-knowledge input:focus {
@@ -205,6 +325,7 @@
             width: 100%;
             font-weight: 600;
             transition: all 0.3s ease;
+            font-size: 14px;
         }
 
         .btn:hover {
@@ -217,8 +338,10 @@
             font-size: 12px;
             padding: 5px 10px;
             margin-left: 10px;
+            width: auto;
         }
 
+        /* Chat */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -301,9 +424,15 @@
             transition: all 0.3s ease;
         }
 
-        .send-btn:hover {
+        .send-btn:hover:not(:disabled) {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(72,52,212,0.3);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .stats {
@@ -311,6 +440,7 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
+            font-size: 14px;
         }
 
         .stats h4 {
@@ -329,6 +459,16 @@
             display: block;
         }
 
+        .error-message {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            border-left: 4px solid #d63031;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -339,6 +479,7 @@
             .admin-panel {
                 width: 100%;
                 order: 2;
+                max-height: 60vh;
             }
             
             .chat-panel {
@@ -355,10 +496,47 @@
                 <h3>🔧 Panel de Administración</h3>
             </div>
             
+            <!-- Configuración Segura de API -->
+            <div class="secure-config">
+                <h4>🔐 Configuración IA</h4>
+                
+                <div class="key-input-group">
+                    <input 
+                        type="password" 
+                        id="apiKeyInput" 
+                        class="key-input"
+                        placeholder="sk-proj-tu-api-key-aqui..."
+                        onpaste="handleApiKeyPaste(event)"
+                        oninput="validateApiKey()"
+                    >
+                    <button class="config-btn" onclick="configureApiKey()" id="configBtn">
+                        Configurar
+                    </button>
+                </div>
+
+                <div class="status-indicator disconnected" id="connectionStatus">
+                    🔴 IA Desconectada - Búsqueda básica activa
+                </div>
+
+                <div class="security-info">
+                    <strong>🛡️ Seguridad:</strong>
+                    <ul>
+                        <li>API key guardada solo en esta sesión</li>
+                        <li>No se almacena permanentemente</li>
+                        <li>Se borra al cerrar el navegador</li>
+                    </ul>
+                    
+                    <div style="margin-top: 10px;">
+                        <strong>🔗 Obtener API key:</strong><br>
+                        <small><a href="https://platform.openai.com/api-keys" target="_blank" style="color: #00b894;">platform.openai.com/api-keys</a></small>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Sección de carga de archivos -->
             <div class="upload-section" id="uploadSection">
                 <h4 style="margin-bottom: 10px; color: #2d3436;">📁 Cargar Documentos</h4>
-                <p style="margin-bottom: 15px; color: #666;">Arrastra archivos aquí o haz clic para seleccionar</p>
+                <p style="margin-bottom: 15px; color: #666; font-size: 14px;">Arrastra archivos aquí o haz clic</p>
                 
                 <input type="file" id="fileInput" class="file-input" multiple accept=".pdf,.doc,.docx,.txt" onchange="handleFileSelect(this.files)">
                 
@@ -367,7 +545,7 @@
                 </button>
                 
                 <div class="file-types">
-                    Formatos soportados: PDF, DOC, DOCX, TXT
+                    Soporta: PDF, DOC, DOCX, TXT
                 </div>
                 
                 <div class="processing" id="processingIndicator">
@@ -376,9 +554,9 @@
             </div>
             
             <div class="add-knowledge">
-                <h4 style="margin-bottom: 10px; color: #2d3436;">✏️ Agregar Manualmente</h4>
+                <h4>✏️ Agregar Manualmente</h4>
                 <input type="text" id="topicInput" placeholder="Tema (ej: Política de Devoluciones)">
-                <textarea id="knowledgeInput" placeholder="Información detallada sobre este tema..."></textarea>
+                <textarea id="knowledgeInput" placeholder="Información detallada..."></textarea>
                 <button class="btn" onclick="addKnowledge()">Agregar Conocimiento</button>
             </div>
 
@@ -395,34 +573,149 @@
 
         <div class="chat-panel">
             <div class="chat-header">
-                <h2>🤖 Asistente Virtual Personalizado</h2>
-                <p>Pregúntame sobre los documentos y temas cargados</p>
+                <h2>🤖 Asistente Virtual con IA</h2>
+                <p>Conversa inteligentemente sobre tus documentos</p>
             </div>
             
             <div class="chat-messages" id="chatMessages">
                 <div class="message assistant">
                     <div class="message-content">
-                        ¡Hola! Ahora puedo procesar documentos PDF, Word y archivos de texto. Sube tus documentos en el panel de administración y podrás preguntarme sobre su contenido.
+                        ¡Hola! Soy tu asistente virtual personalizado. 
+                        
+                        <br><br><strong>🚀 Para comenzar:</strong>
+                        <br>1️⃣ <strong>Configura tu API key</strong> de OpenAI para IA avanzada
+                        <br>2️⃣ <strong>Carga documentos</strong> o agrega información manualmente
+                        <br>3️⃣ <strong>¡Pregúntame lo que quieras!</strong>
+                        
+                        <br><br><em>Sin API key funciono con búsqueda básica. Con API key puedo razonar y conversar naturalmente.</em>
                     </div>
                 </div>
             </div>
             
-            <div class="typing" id="typing">El asistente está escribiendo...</div>
+            <div class="typing" id="typing">🤔 El asistente está pensando...</div>
             
             <div class="chat-input">
                 <div class="input-group">
                     <input type="text" id="messageInput" placeholder="Escribe tu pregunta aquí..." onkeypress="handleKeyPress(event)">
-                    <button class="send-btn" onclick="sendMessage()">Enviar</button>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Variables globales
         let knowledgeBase = [];
         let chatHistory = [];
+        let openaiApiKey = '';
+        let isAiEnabled = false;
 
-        // Configurar drag and drop
+        // === CONFIGURACIÓN SEGURA DE API ===
+        
+        function validateApiKey() {
+            const input = document.getElementById('apiKeyInput');
+            const value = input.value.trim();
+            
+            if (value.length > 10) {
+                const isValid = value.startsWith('sk-') && value.length > 20;
+                input.style.borderColor = isValid ? '#00b894' : '#d63031';
+                return isValid;
+            }
+            return false;
+        }
+
+        function handleApiKeyPaste(event) {
+            setTimeout(() => {
+                validateApiKey();
+            }, 100);
+        }
+
+        function configureApiKey() {
+            const input = document.getElementById('apiKeyInput');
+            const statusIndicator = document.getElementById('connectionStatus');
+            const configBtn = document.getElementById('configBtn');
+            const value = input.value.trim();
+
+            if (!validateApiKey()) {
+                showError('⚠️ API key inválida. Debe comenzar con "sk-" y tener al menos 20 caracteres.');
+                return;
+            }
+
+            openaiApiKey = value;
+            isAiEnabled = true;
+
+            // Guardar en sessionStorage (se borra al cerrar navegador)
+            sessionStorage.setItem('temp_openai_key', openaiApiKey);
+
+            // Actualizar UI
+            statusIndicator.innerHTML = '🟢 IA Conectada - Respuestas inteligentes activadas';
+            statusIndicator.className = 'status-indicator connected';
+
+            // Enmascarar la key en el input
+            const maskedKey = value.substring(0, 7) + '•'.repeat(Math.min(20, value.length - 11)) + value.slice(-4);
+            input.value = maskedKey;
+            input.disabled = true;
+
+            // Cambiar botón a reset
+            configBtn.innerHTML = '🔄 Reset';
+            configBtn.className = 'config-btn reset';
+            configBtn.onclick = resetApiKey;
+
+            addMessage('assistant', '✅ **IA Conectada exitosamente!**\n\nAhora puedo:\n• Razonar sobre tus documentos\n• Mantener conversaciones naturales\n• Responder preguntas complejas\n\n¿En qué puedo ayudarte?');
+        }
+
+        function resetApiKey() {
+            if (confirm('¿Resetear configuración de IA? Volverás a búsqueda básica.')) {
+                openaiApiKey = '';
+                isAiEnabled = false;
+                sessionStorage.removeItem('temp_openai_key');
+                
+                const input = document.getElementById('apiKeyInput');
+                input.value = '';
+                input.disabled = false;
+                input.style.borderColor = '#555';
+                
+                const statusIndicator = document.getElementById('connectionStatus');
+                statusIndicator.innerHTML = '🔴 IA Desconectada - Búsqueda básica activa';
+                statusIndicator.className = 'status-indicator disconnected';
+                
+                const configBtn = document.getElementById('configBtn');
+                configBtn.innerHTML = 'Configurar';
+                configBtn.className = 'config-btn';
+                configBtn.onclick = configureApiKey;
+
+                addMessage('assistant', '🔄 **Configuración reseteada**\n\nVuelvo a funcionar con búsqueda básica. Puedes reconfigurar tu API key cuando quieras para activar IA avanzada.');
+            }
+        }
+
+        // Recuperar API key al cargar página
+        window.onload = function() {
+            const savedKey = sessionStorage.getItem('temp_openai_key');
+            if (savedKey) {
+                openaiApiKey = savedKey;
+                isAiEnabled = true;
+                
+                const statusIndicator = document.getElementById('connectionStatus');
+                statusIndicator.innerHTML = '🟢 IA Conectada (sesión anterior)';
+                statusIndicator.className = 'status-indicator connected';
+                
+                const input = document.getElementById('apiKeyInput');
+                const maskedKey = savedKey.substring(0, 7) + '•'.repeat(Math.min(20, savedKey.length - 11)) + savedKey.slice(-4);
+                input.value = maskedKey;
+                input.disabled = true;
+                
+                const configBtn = document.getElementById('configBtn');
+                configBtn.innerHTML = '🔄 Reset';
+                configBtn.className = 'config-btn reset';
+                configBtn.onclick = resetApiKey;
+            }
+            
+            setupDragAndDrop();
+            loadSampleData();
+        };
+
+        // === MANEJO DE ARCHIVOS ===
+        
         function setupDragAndDrop() {
             const uploadSection = document.getElementById('uploadSection');
             
@@ -443,7 +736,6 @@
             });
         }
 
-        // Manejar selección de archivos
         async function handleFileSelect(files) {
             const processingIndicator = document.getElementById('processingIndicator');
             
@@ -462,16 +754,17 @@
                         
                         knowledgeBase.push(knowledge);
                         updateKnowledgeDisplay();
+                        
+                        addMessage('assistant', `✅ **Archivo procesado:** ${file.name}\n\nYa puedes preguntarme sobre su contenido.`);
                     }
                 } catch (error) {
-                    alert(`Error procesando ${file.name}: ${error.message}`);
+                    showError(`Error procesando ${file.name}: ${error.message}`);
                 }
                 
                 processingIndicator.classList.remove('show');
             }
         }
 
-        // Procesar diferentes tipos de archivo
         async function processFile(file) {
             const fileType = file.type;
             const fileName = file.name.toLowerCase();
@@ -487,7 +780,6 @@
             }
         }
 
-        // Leer archivo de texto
         function readTextFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -497,18 +789,12 @@
             });
         }
 
-        // Leer archivo PDF (versión simplificada - en producción usarías PDF.js)
         async function readPDFFile(file) {
-            // Nota: Esta es una implementación básica
-            // Para una extracción completa de PDF necesitarías PDF.js
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = async (e) => {
                     try {
-                        // Simulación de extracción de PDF
-                        const arrayBuffer = e.target.result;
-                        // En una implementación real, aquí usarías PDF.js para extraer el texto
-                        resolve(`Contenido del PDF: ${file.name}\n\n[NOTA: Para extracción completa de PDF se requiere implementación backend con PDF.js o similar]\n\nArchivo cargado correctamente. El asistente puede responder preguntas generales sobre este documento.`);
+                        resolve(`Contenido del PDF: ${file.name}\n\n[NOTA: Para extracción completa de PDF se requiere implementación backend con PDF.js]\n\nArchivo cargado correctamente. Puedes hacer preguntas generales sobre este documento.`);
                     } catch (error) {
                         reject(new Error('Error procesando PDF'));
                     }
@@ -518,7 +804,6 @@
             });
         }
 
-        // Leer archivo Word (requiere mammoth.js - ya incluido)
         async function readWordFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -528,7 +813,6 @@
                             const result = await mammoth.extractRawText({arrayBuffer: e.target.result});
                             resolve(result.value);
                         } else {
-                            // Fallback si mammoth no está disponible
                             resolve(`Documento Word: ${file.name}\n\n[NOTA: Para extracción completa de Word se requiere biblioteca mammoth.js]\n\nArchivo cargado correctamente.`);
                         }
                     } catch (error) {
@@ -540,12 +824,14 @@
             });
         }
 
+        // === GESTIÓN DE CONOCIMIENTO ===
+        
         function addKnowledge() {
             const topic = document.getElementById('topicInput').value.trim();
             const content = document.getElementById('knowledgeInput').value.trim();
 
             if (!topic || !content) {
-                alert('Por favor completa tanto el tema como el contenido.');
+                showError('Por favor completa tanto el tema como el contenido.');
                 return;
             }
 
@@ -559,11 +845,16 @@
             document.getElementById('knowledgeInput').value = '';
             
             updateKnowledgeDisplay();
+            addMessage('assistant', `✅ **Tema agregado:** ${topic}\n\nYa puedes preguntarme sobre este tema.`);
         }
 
         function removeKnowledge(index) {
-            knowledgeBase.splice(index, 1);
-            updateKnowledgeDisplay();
+            const item = knowledgeBase[index];
+            if (confirm(`¿Eliminar "${item.topic}"?`)) {
+                knowledgeBase.splice(index, 1);
+                updateKnowledgeDisplay();
+                addMessage('assistant', `🗑️ **Tema eliminado:** ${item.topic}`);
+            }
         }
 
         function updateKnowledgeDisplay() {
@@ -579,7 +870,7 @@
                 
                 div.innerHTML = `
                     <h4>${icon} ${item.topic}</h4>
-                    <p>${item.content.substring(0, 150)}${item.content.length > 150 ? '...' : ''}</p>
+                    <p>${item.content.substring(0, 120)}${item.content.length > 120 ? '...' : ''}</p>
                     <button class="btn btn-danger" onclick="removeKnowledge(${index})">Eliminar</button>
                 `;
                 list.appendChild(div);
@@ -594,7 +885,9 @@
             `;
         }
 
-        function sendMessage() {
+        // === SISTEMA DE CHAT ===
+        
+        async function sendMessage() {
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
@@ -603,13 +896,134 @@
             addMessage('user', message);
             input.value = '';
             
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
             document.getElementById('typing').classList.add('show');
             
-            setTimeout(() => {
-                const response = generateResponse(message);
+            try {
+                let response;
+                if (isAiEnabled) {
+                    response = await generateAIResponse(message);
+                } else {
+                    response = generateBasicResponse(message);
+                }
+                
                 document.getElementById('typing').classList.remove('show');
                 addMessage('assistant', response);
-            }, 1500);
+                
+            } catch (error) {
+                document.getElementById('typing').classList.remove('show');
+                addMessage('assistant', `❌ **Error:** ${error.message}\n\nIntenta de nuevo o verifica tu configuración de API.`);
+            }
+            
+            sendBtn.disabled = false;
+        }
+
+        // Respuesta con IA (OpenAI)
+        async function generateAIResponse(userMessage) {
+            if (knowledgeBase.length === 0) {
+                return "📚 **Base de conocimiento vacía**\n\nAún no tengo información cargada. Agrega algunos documentos o temas para que pueda ayudarte mejor.";
+            }
+
+            const relevantContext = searchKnowledge(userMessage);
+            
+            if (relevantContext.length === 0) {
+                return `🔍 **No encontré información relevante**\n\n**Temas disponibles:**\n${knowledgeBase.map(item => `• ${item.topic}`).join('\n')}\n\n¿Podrías reformular tu pregunta mencionando alguno de estos temas?`;
+            }
+
+            const contextText = relevantContext.map(item => 
+                `TEMA: ${item.topic}\nCONTENIDO: ${item.content}`
+            ).join('\n\n');
+
+            const prompt = `Eres un asistente virtual especializado y profesional. Responde ÚNICAMENTE basándote en la información proporcionada.
+
+INFORMACIÓN DISPONIBLE:
+${contextText}
+
+PREGUNTA DEL USUARIO: ${userMessage}
+
+INSTRUCCIONES:
+- Responde de manera conversacional, útil y profesional
+- Solo usa la información proporcionada arriba
+- Si la información no es suficiente para responder completamente, menciona qué información adicional sería útil
+- Cita las fuentes cuando sea apropiado
+- Usa formato markdown para mejor legibilidad
+- Mantén un tono amigable pero profesional
+
+RESPUESTA:`;
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${openaiApiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'user', content: prompt }
+                    ],
+                    max_tokens: 600,
+                    temperature: 0.7
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(`Error de API (${response.status}): ${errorData.error?.message || 'Verifica tu API key y límites de uso'}`);
+            }
+
+            const data = await response.json();
+            const aiResponse = data.choices[0].message.content;
+            
+            return `🤖 **Respuesta con IA:**\n\n${aiResponse}\n\n---\n*Fuentes consultadas: ${relevantContext.map(item => item.topic).join(', ')}*`;
+        }
+
+        // Respuesta básica (sin IA)
+        function generateBasicResponse(userMessage) {
+            if (knowledgeBase.length === 0) {
+                return "📚 **Base de conocimiento vacía**\n\nAún no tengo información cargada. Agrega algunos documentos o temas en el panel de administración.";
+            }
+
+            const relevantKnowledge = searchKnowledge(userMessage);
+            
+            if (relevantKnowledge.length === 0) {
+                return `🔍 **No encontré información específica**\n\n**Temas disponibles:**\n${knowledgeBase.map(item => `• ${item.topic}`).join('\n')}\n\n¿Podrías reformular tu pregunta mencionando alguno de estos temas?`;
+            }
+
+            let response = "📖 **Información encontrada:**\n\n";
+            
+            relevantKnowledge.forEach((item, index) => {
+                response += `**${item.topic}:**\n${item.content}\n\n`;
+            });
+
+            response += "---\n*💡 Para respuestas más inteligentes y conversacionales, configura una API key de OpenAI en el panel de administración.*";
+            
+            return response;
+        }
+
+        function searchKnowledge(query) {
+            const queryWords = query.toLowerCase().split(' ').filter(word => word.length > 2);
+            const matches = [];
+
+            knowledgeBase.forEach(item => {
+                const topicWords = item.topic.toLowerCase();
+                const contentWords = item.content.toLowerCase();
+                
+                let score = 0;
+                queryWords.forEach(word => {
+                    if (topicWords.includes(word)) score += 3;
+                    if (contentWords.includes(word)) score += 1;
+                });
+
+                if (score > 0) {
+                    matches.push({ ...item, score });
+                }
+            });
+
+            return matches
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
         }
 
         function addMessage(sender, content) {
@@ -633,80 +1047,47 @@
             chatHistory.push({ sender, content });
         }
 
-        function generateResponse(userMessage) {
-            if (knowledgeBase.length === 0) {
-                return "Aún no tengo documentos o información cargada. Sube algunos archivos o agrega información manualmente para que pueda ayudarte.";
-            }
-
-            const relevantKnowledge = searchKnowledge(userMessage);
-            
-            if (relevantKnowledge.length === 0) {
-                return `No encontré información específica sobre tu consulta en los documentos cargados.
-
-**Documentos y temas disponibles:**
-${knowledgeBase.map(item => `• ${item.topic}`).join('\n')}
-
-¿Podrías reformular tu pregunta mencionando alguno de estos temas?`;
-            }
-
-            let response = "Basándome en los documentos cargados:\n\n";
-            
-            relevantKnowledge.forEach((item, index) => {
-                response += `**${item.topic}:**\n${item.content.substring(0, 500)}${item.content.length > 500 ? '...' : ''}\n\n`;
-            });
-
-            response += "¿Necesitas más detalles sobre algún aspecto específico?";
-            
-            return response;
-        }
-
-        function searchKnowledge(query) {
-            const queryWords = query.toLowerCase().split(' ');
-            const matches = [];
-
-            knowledgeBase.forEach(item => {
-                const topicWords = item.topic.toLowerCase();
-                const contentWords = item.content.toLowerCase();
-                
-                let score = 0;
-                queryWords.forEach(word => {
-                    if (word.length > 2) { // Ignorar palabras muy cortas
-                        if (topicWords.includes(word)) score += 3;
-                        if (contentWords.includes(word)) score += 1;
-                    }
-                });
-
-                if (score > 0) {
-                    matches.push({ ...item, score });
-                }
-            });
-
-            return matches
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 2);
-        }
-
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
                 sendMessage();
             }
         }
 
-        // Inicializar
-        setupDragAndDrop();
+        // === UTILIDADES ===
+        
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            
+            const container = document.querySelector('.admin-panel');
+            container.insertBefore(errorDiv, container.firstChild);
+            
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
 
         // Cargar datos de ejemplo
         function loadSampleData() {
             const sampleKnowledge = [
                 {
                     topic: "Política de Devoluciones",
-                    content: "Aceptamos devoluciones dentro de 30 días de la compra. El producto debe estar en condiciones originales con etiquetas. Se requiere recibo de compra. Las devoluciones se procesan en 5-7 días hábiles. Productos en oferta no admiten devolución.",
+                    content: "Aceptamos devoluciones dentro de 30 días de la compra. El producto debe estar en condiciones originales con todas las etiquetas. Se requiere recibo de compra original. Las devoluciones se procesan en 5-7 días hábiles. Los productos en oferta final no admiten devolución. Para iniciar una devolución, contacta nuestro servicio al cliente.",
                     type: 'manual'
                 },
                 {
-                    topic: "📄 Manual_Usuario.pdf",
-                    content: "MANUAL DE USUARIO - SISTEMA DE GESTIÓN\n\nCapítulo 1: Introducción\nEste sistema permite gestionar clientes, productos y ventas de manera eficiente.\n\nCapítulo 2: Configuración inicial\nPara comenzar, accede al panel de administración con tus credenciales...\n\nCapítulo 3: Gestión de clientes\nPuedes agregar, editar y eliminar clientes desde el módulo correspondiente.",
-                    type: 'file'
+                    topic: "Horarios de Atención",
+                    content: "Nuestro horario de atención al cliente es de lunes a viernes de 9:00 AM a 6:00 PM. Los sábados atendemos de 10:00 AM a 2:00 PM. Domingos cerrado. Para emergencias, contactar al +54 11 1234-5678. También puedes escribirnos por email a soporte@empresa.com y te responderemos en menos de 24 horas.",
+                    type: 'manual'
+                },
+                {
+                    topic: "Métodos de Pago",
+                    content: "Aceptamos múltiples métodos de pago: tarjetas de crédito (Visa, Mastercard, American Express), tarjetas de débito, transferencias bancarias, MercadoPago, PayPal y efectivo en sucursal. Ofrecemos financiación sin interés en 3, 6 y 12 cuotas para compras superiores a $50.000. Para compras online, el pago se procesa de forma segura con encriptación SSL.",
+                    type: 'manual'
                 }
             ];
 
@@ -716,7 +1097,10 @@ ${knowledgeBase.map(item => `• ${item.topic}`).join('\n')}
             updateKnowledgeDisplay();
         }
 
-        loadSampleData();
+        // Limpiar al cerrar ventana
+        window.addEventListener('beforeunload', function() {
+            openaiApiKey = '';
+        });
     </script>
 </body>
 </html>
