@@ -931,24 +931,32 @@
                 return `🔍 **No encontré información relevante**\n\n**Temas disponibles:**\n${knowledgeBase.map(item => `• ${item.topic}`).join('\n')}\n\n¿Podrías reformular tu pregunta mencionando alguno de estos temas?`;
             }
 
-            const contextText = relevantContext.map(item => 
-                `TEMA: ${item.topic}\nCONTENIDO: ${item.content}`
-            ).join('\n\n');
+            // Limitar el contexto para evitar exceder tokens
+            const contextText = relevantContext.map(item => {
+                const content = item.content.length > 1000 ? 
+                    item.content.substring(0, 1000) + '...' : 
+                    item.content;
+                return `TEMA: ${item.topic}\nCONTENIDO: ${content}`;
+            }).join('\n\n');
 
-            const prompt = `Eres un asistente virtual especializado y profesional. Responde ÚNICAMENTE basándote en la información proporcionada.
+            // Limitar el prompt total
+            const maxContextLength = 8000; // Dejar espacio para respuesta
+            const truncatedContext = contextText.length > maxContextLength ? 
+                contextText.substring(0, maxContextLength) + '\n\n[...contexto truncado...]' : 
+                contextText;
 
-INFORMACIÓN DISPONIBLE:
-${contextText}
+            const prompt = `Eres un asistente virtual especializado. Responde basándote en la información proporcionada.
 
-PREGUNTA DEL USUARIO: ${userMessage}
+INFORMACIÓN:
+${truncatedContext}
+
+PREGUNTA: ${userMessage}
 
 INSTRUCCIONES:
-- Responde de manera conversacional, útil y profesional
-- Solo usa la información proporcionada arriba
-- Si la información no es suficiente para responder completamente, menciona qué información adicional sería útil
+- Responde de manera conversacional y útil
+- Solo usa la información proporcionada
 - Cita las fuentes cuando sea apropiado
-- Usa formato markdown para mejor legibilidad
-- Mantén un tono amigable pero profesional
+- Si necesitas más información, menciónalo
 
 RESPUESTA:`;
 
@@ -963,7 +971,7 @@ RESPUESTA:`;
                     messages: [
                         { role: 'user', content: prompt }
                     ],
-                    max_tokens: 600,
+                    max_tokens: 800,
                     temperature: 0.7
                 })
             });
